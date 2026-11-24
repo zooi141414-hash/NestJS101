@@ -1,0 +1,43 @@
+@host = http://localhost:3000
+
+### ===== โจทย์ที่ 1 ค่าบริการจัดส่งพัสดุ =====
+### ยอดรวม 50
+GET {{host}}/shipping?weight=1&zone=bangkok
+### ยอดรวม 96
+GET {{host}}/shipping?weight=2.5&zone=north
+### ยอดรวม 75
+GET {{host}}/shipping?weight=0.5&zone=south
+### 400
+GET {{host}}/shipping?weight=-1&zone=north
+### 400 ไม่ระบุน้ำหนัก
+GET {{host}}/shipping?zone=north
+### 400
+GET {{host}}/shipping?weight=2&zone=mars
+
+### ===== โจทย์ที่ 2 ค่าปรับหนังสือเกินกำหนดส่ง =====
+### ค่าปรับ 0
+GET {{host}}/fine?days=2&type=general
+### ค่าปรับ 25
+GET {{host}}/fine?days=8&type=general
+### ค่าปรับ 140
+GET {{host}}/fine?days=10&type=reserve
+### ค่าปรับ 500 (ชนเพดาน)
+GET {{host}}/fine?days=60&type=reference
+### 400
+GET {{host}}/fine?days=-3&type=general
+### 400
+GET {{host}}/fine?days=5&type=magazine
+
+### ===== โจทย์ที่ 3 ค่าไฟฟ้าแบบอัตราขั้นบันได =====
+### ยอดรวม 340
+GET {{host}}/electricity?units=100&type=residential
+### ยอดรวม 690
+GET {{host}}/electricity?units=200&type=residential
+### ยอดรวม 1940
+GET {{host}}/electricity?units=500&type=business
+### ยอดรวม 40
+GET {{host}}/electricity?units=0&type=residential
+### 400
+GET {{host}}/electricity?units=abc&type=residential
+### 400
+GET {{host}}/electricity?units=100&type=factory
