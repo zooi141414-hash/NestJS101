@@ -9,7 +9,6 @@ export type Zone = keyof typeof ZONE_FEES;
 export type BookType = keyof typeof FINE_RATES;
 export type MeterType = keyof typeof SERVICE_CHARGES;
 
-/
 const roundBaht = (n: number) => Math.round(n);
 
 @Injectable()
@@ -23,7 +22,7 @@ export class Assignment337Service {
   fine(days: number, type: BookType) {
     const chargeableDays = Math.max(days - 3, 0); 
     const rate = FINE_RATES[type];
-    const total = roundBaht(Math.min(chargeableDays * rate, 500))
+    const total = roundBaht(Math.min(chargeableDays * rate, 500));
     return { days, type, chargeableDays, rate, total };
   }
 
